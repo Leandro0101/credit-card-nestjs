@@ -7,6 +7,7 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
 } from 'typeorm';
+import SolicitationStatus from './enum/solicitation-status.enum';
 
 @Entity()
 export class Solicitation {
@@ -17,7 +18,7 @@ export class Solicitation {
   createdAt: Date;
 
   @Column()
-  status: string;
+  status: SolicitationStatus;
 
   @Column()
   preferredDueDay: number;
