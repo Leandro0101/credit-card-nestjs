@@ -2,15 +2,14 @@ import { NestFactory } from '@nestjs/core';
 import 'dotenv/config';
 import { AppModule } from './app.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-
+  app.useGlobalPipes(new ValidationPipe());
   const config = new DocumentBuilder()
-    .setTitle('cats example')
-    .setDescription('The cats API description')
+    .setTitle('Cartão de cŕedito')
     .setVersion('1.0')
-    .addTag('cats')
     .build();
 
   const document = SwaggerModule.createDocument(app, config);

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/user/user.entity';
 import { UserService } from 'src/user/user.service';
@@ -16,6 +16,13 @@ export class CreditCardService {
     private userService: UserService,
   ) {}
   async createSolicitation(creditCardRequest: CreditCardRequestDTO) {
+    const userExists = await this.userService.verifyIfUserExists(
+      creditCardRequest.email,
+      creditCardRequest.cpf,
+    );
+
+    if (userExists) throw new BadRequestException('USer already exists');
+
     const user = await this.userService.createUser({
       email: creditCardRequest.email,
       name: creditCardRequest.name,

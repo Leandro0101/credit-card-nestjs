@@ -19,6 +19,15 @@ export class UserService {
     return await this.userRepository.save(userEntity);
   }
 
+  async verifyIfUserExists(email: string, cpf: string) {
+    const user = await this.userRepository.findOne({
+      where: [{ email }, { cpf }],
+      select: ['id'],
+    });
+
+    return !!user;
+  }
+
   private async encryptPAssword(password: string) {
     return await bcrypt.hash(password, 10);
   }
