@@ -6,6 +6,7 @@ import { CreditCardModule } from './credit-card/credit-card.module';
 import { UserModule } from './user/user.module';
 import { User } from './user/user.entity';
 import { Solicitation } from './credit-card/solicitation.entity';
+import { AuthModule } from './auth/auth.module';
 import 'dotenv/config';
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import 'dotenv/config';
     }),
     CreditCardModule,
     UserModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

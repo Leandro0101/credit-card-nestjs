@@ -16,7 +16,7 @@ export class CreditCardService {
     private userService: UserService,
   ) {}
   async createSolicitation(creditCardRequest: CreditCardRequestDTO) {
-    const userExists = await this.userService.verifyIfUserExists(
+    const userExists = await this.userService.checkUserByCpfOrEmail(
       creditCardRequest.email,
       creditCardRequest.cpf,
     );
