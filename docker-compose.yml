@@ -1,0 +1,32 @@
+version: '3.1'
+
+services:
+  api:
+    container_name: credit-card-api
+    env_file:
+      - .env
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - ${APP_PORT}:${APP_PORT}
+    volumes:
+      - .:/home/credit-card
+    depends_on:
+      - database
+
+  database:
+    image: mysql:latest
+    container_name: credit_card_db
+    env_file:
+      - .env
+    environment:
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - ${DB_PORT}:${DB_PORT}
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080

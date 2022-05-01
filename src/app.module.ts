@@ -6,16 +6,16 @@ import { CreditCardModule } from './credit-card/credit-card.module';
 import { UserModule } from './user/user.module';
 import { User } from './user/user.entity';
 import { Solicitation } from './credit-card/solicitation.entity';
-
+import 'dotenv/config';
 @Module({
   imports: [
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: '172.17.0.2',
-      port: 3306,
-      username: 'root',
-      password: 'toor123',
-      database: 'credit_card',
+      host: process.env.DB_HOST,
+      port: Number(process.env.DB_PORT),
+      username: process.env.DB_USERNAME,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_NAME,
       entities: [User, Solicitation],
       synchronize: true,
     }),
