@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/user/user.entity';
+import { UserService } from 'src/user/user.service';
 import { Repository } from 'typeorm';
 import SolicitationStatus from './enum/solicitation-status.enum';
 import { Solicitation } from './solicitation.entity';
@@ -12,16 +13,15 @@ export class CreditCardService {
     @InjectRepository(User) private userRepository: Repository<User>,
     @InjectRepository(Solicitation)
     private solicationRepository: Repository<Solicitation>,
+    private userService: UserService,
   ) {}
   async createSolicitation(creditCardRequest: CreditCardRequestDTO) {
-    const user = await this.userRepository.save(
-      this.userRepository.create({
-        name: creditCardRequest.name,
-        cpf: creditCardRequest.cpf,
-        email: creditCardRequest.email,
-        password: creditCardRequest.password,
-      }),
-    );
+    const user = await this.userService.createUser({
+      email: creditCardRequest.email,
+      name: creditCardRequest.name,
+      password: creditCardRequest.password,
+      cpf: creditCardRequest.cpf,
+    });
 
     const approved = this.isApproved();
 
