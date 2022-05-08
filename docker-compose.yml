@@ -10,6 +10,7 @@ services:
       dockerfile: Dockerfile.dev
     ports:
       - ${APP_PORT}:${APP_PORT}
+      - 9229:9229
     volumes:
       - .:/home/credit-card
     depends_on:
