@@ -7,7 +7,8 @@ import { UserModule } from './user/user.module';
 import { User } from './user/user.entity';
 import { Solicitation } from './credit-card/solicitation.entity';
 import { AuthModule } from './auth/auth.module';
-import 'dotenv/config';
+import { APP_GUARD } from '@nestjs/core';
+import { JwtAuthGuard } from './auth/jwt-auth.guard';
 @Module({
   imports: [
     TypeOrmModule.forRoot({
@@ -25,6 +26,6 @@ import 'dotenv/config';
     AuthModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, { provide: APP_GUARD, useClass: JwtAuthGuard }],
 })
 export class AppModule {}
